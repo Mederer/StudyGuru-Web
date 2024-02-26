@@ -1,0 +1,41 @@
+@use "../../styles/vars";
+
+$footerHeight: 5rem;
+
+.appContainer {
+  height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.header {
+  height: vars.$headerHeight;
+  background-color: orangered;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+
+  .title {
+    font-size: 2.4rem;
+    color: white;
+    flex: 5;
+    text-align: center;
+  }
+
+  .icon {
+    flex: 1;
+  }
+}
+
+.main {
+  padding-bottom: $footerHeight;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: orangered;
+  height: $footerHeight;
+}
