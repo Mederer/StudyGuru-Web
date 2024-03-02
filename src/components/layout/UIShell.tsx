@@ -17,6 +17,10 @@ function UIShell() {
         setMenuOpen(false);
     }
 
+    window.onscroll = () => {
+        setMenuOpen(false);
+    }
+
     return (
         <div className={styles.appContainer}>
             <header className={styles.header}>
@@ -26,7 +30,7 @@ function UIShell() {
                     <Menu closeMenu={handleCloseMenu} isActive={menuOpen} />
                 </nav>
             </header>
-            <main>
+            <main className={styles.main}>
                 <Outlet />
             </main>
             <footer className={styles.footer}>

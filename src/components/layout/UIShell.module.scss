@@ -1,9 +1,7 @@
 @use "../../styles/vars";
 
-$footerHeight: 5rem;
-
 .appContainer {
-  height: 100vh;
+  min-height: 100vh;
   position: relative;
   overflow-x: hidden;
 }
@@ -29,7 +27,7 @@ $footerHeight: 5rem;
 }
 
 .main {
-  padding-bottom: $footerHeight;
+  padding: 1rem 1rem calc(#{vars.$footerHeight} + 1rem);
 }
 
 .footer {
@@ -37,5 +35,5 @@ $footerHeight: 5rem;
   bottom: 0;
   width: 100%;
   background-color: orangered;
-  height: $footerHeight;
+  height: vars.$footerHeight;
 }
