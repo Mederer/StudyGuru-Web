@@ -6,26 +6,26 @@ import "./styles/globals.scss"
 import "./styles/reset.scss"
 import {Provider} from "react-redux";
 import {store} from "./store.ts";
-import {Amplify} from "aws-amplify";
-import awsConfig from "./aws-exports";
-import {Authenticator} from "@aws-amplify/ui-react";
+import {AuthProvider} from "react-oidc-context";
+import "react-toastify/dist/ReactToastify.css";
 
-Amplify.configure({
-    Auth: {
-        Cognito: {
-            userPoolId: awsConfig.USER_POOL_ID,
-            userPoolClientId: awsConfig.USER_POOL_APP_CLIENT_ID,
-        }
-    }
-});
+const oidcConfig = {
+    authority: "http://localhost:8080/realms/myrealm/",
+    client_id: "StudyGuruWeb",
+    redirect_uri: "http://localhost:5173/",
+}
+
+const onSignInCallback = () => {
+    window.history.replaceState({}, document.title, window.location.pathname);
+}
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <Provider store={store}>
             <BrowserRouter>
-                <Authenticator.Provider>
+                <AuthProvider {...oidcConfig} onSigninCallback={onSignInCallback}>
                     <App/>
-                </Authenticator.Provider>
+                </AuthProvider>
             </BrowserRouter>
         </Provider>
     </React.StrictMode>,

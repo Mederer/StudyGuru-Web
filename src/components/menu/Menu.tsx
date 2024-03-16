@@ -4,14 +4,19 @@ import {faHouse} from "@fortawesome/free-solid-svg-icons/faHouse";
 import {faSchool} from "@fortawesome/free-solid-svg-icons/faSchool";
 import Spacer from "../common/Spacer.tsx";
 import {faRightFromBracket} from "@fortawesome/free-solid-svg-icons/faRightFromBracket";
-import {useAuthenticator} from "@aws-amplify/ui-react";
+import {useAuth} from "react-oidc-context";
 
 interface MenuProps {
     isActive: boolean;
     closeMenu: () => void;
 }
 export default function Menu({isActive, closeMenu}: MenuProps) {
-    const {authStatus} = useAuthenticator(context => [context.authStatus]);
+    const auth = useAuth();
+
+    const handleLogout = async () => {
+        await auth.signoutRedirect()
+    }
+
     return <div className={`${styles.menu} ${isActive ? styles.open : ""}`}>
         <ul className={styles.menuItems}>
             <li>
@@ -20,12 +25,9 @@ export default function Menu({isActive, closeMenu}: MenuProps) {
             <li>
                 <MenuEntry name={"Flash Cards"} closeMenu={closeMenu} link={"/flashcards"} icon={faSchool} />
             </li>
-            {authStatus === "authenticated" && <li>
-                <MenuEntry name={"AI Quiz"} closeMenu={closeMenu} link={"/ai"} icon={faSchool} />
-            </li>}
             <Spacer/>
             <li>
-                <MenuEntry name={"Logout"} closeMenu={closeMenu} link={"/about"} icon={faRightFromBracket} />
+                <MenuEntry type="button" onClick={handleLogout} name={"Logout"} closeMenu={closeMenu} link={"/"} icon={faRightFromBracket} />
             </li>
         </ul>
     </div>

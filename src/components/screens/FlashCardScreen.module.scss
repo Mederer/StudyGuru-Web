@@ -1,8 +1,32 @@
+@use "src/styles/animations";
+
 .flashCardScreen {
 
   .topRow {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    .btnContainer {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+  }
+
+  .settingsDrawer {
+    padding: 1rem;
+    max-height: 0;
+    margin-bottom: 0;
+    opacity: 0;
+    height: 10rem;
+    transition: all .2s ease-in-out;
+    background-color: lightgrey;
+
+    &.open {
+      max-height: 10rem;
+      margin-bottom: 1rem;
+      opacity: 100%;
+    }
   }
 }

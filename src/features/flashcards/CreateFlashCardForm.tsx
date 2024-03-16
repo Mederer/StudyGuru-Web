@@ -1,5 +1,7 @@
 import {FormEvent, useEffect, useState} from "react";
 import {useCreateFlashCardMutation} from "../../services/studyguruApi.ts";
+import {toast} from "react-toastify";
+import TextArea from "../../components/common/TextArea.tsx";
 
 const validateQuestion = (question: string) => question.length > 2;
 const validateAnswer = (answer: string) => answer.length > 2;
@@ -7,16 +9,18 @@ const validateAnswer = (answer: string) => answer.length > 2;
 export default function CreateFlashCardForm() {
     const [question, setQuestion] = useState("");
     const [answer, setAnswer] = useState("");
-    const [createFlashCard, {reset, isSuccess}] = useCreateFlashCardMutation();
+    const [createFlashCard, {reset, isSuccess, isError}] = useCreateFlashCardMutation();
 
     useEffect(() => {
         if (isSuccess) {
-            alert("Flash card created!")
+            toast.success("Flash card created");
             setQuestion("");
             setAnswer("");
             reset();
+        } else if (isError) {
+            toast.error("Error creating flash card");
         }
-    }, [isSuccess, reset]);
+    }, [isSuccess, reset, isError]);
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -27,14 +31,9 @@ export default function CreateFlashCardForm() {
     }
 
     return <form onSubmit={handleSubmit}>
-        <div>
-            <label htmlFor="question">Question</label>
-            <input name="question" id="question" value={question} onChange={e => setQuestion(e.target.value)}/>
-        </div>
-        <div>
-            <label htmlFor="answer">Answer</label>
-            <input name="answer" id="answer" value={answer} onChange={e => setAnswer(e.target.value)}/>
-        </div>
+        <TextArea value={question} label="Question" onChange={(e) => setQuestion(e.target.value)} />
+        <TextArea value={answer} label="Answer" onChange={(e) => setAnswer(e.target.value)} />
         <button type="submit">Create</button>
     </form>
+
 }

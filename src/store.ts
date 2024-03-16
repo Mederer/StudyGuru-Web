@@ -1,13 +1,11 @@
 import {configureStore} from "@reduxjs/toolkit";
-import counterReducer from "./features/counter/counterSlice";
+import kanbanReducer from "./features/kanban/kanbanSlice.ts";
 import {studyguruApi} from "./services/studyguruApi.ts";
 import {setupListeners} from "@reduxjs/toolkit/query";
-import authReducer from "./features/auth/authSlice";
 
 export const store = configureStore({
     reducer: {
-        counter: counterReducer,
-        auth: authReducer,
+        kanban: kanbanReducer,
         [studyguruApi.reducerPath]: studyguruApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>

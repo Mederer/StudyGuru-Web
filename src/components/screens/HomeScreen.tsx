@@ -1,16 +1,10 @@
-import { Authenticator } from "@aws-amplify/ui-react";
-import "@aws-amplify/ui-react/styles.css";
-import useAuth from "../../features/auth/useAuth.ts";
+import {useAuth} from "react-oidc-context";
 
 export default function HomeScreen() {
-    const {firstName} = useAuth();
-    return <Authenticator signUpAttributes={["given_name", "family_name", "birthdate"]}
-    >
-        {({signOut}) => (
-            <div>
-                <h1>Welcome, {firstName}</h1>
-                <button onClick={signOut}>Sign out</button>
-            </div>
-        )}
-    </Authenticator>
+    const auth = useAuth();
+
+    return <div>
+        <h1>Hi {auth.user?.profile.given_name ?? "there"}</h1>
+        <p>Let's get studying!</p>
+    </div>
 }
