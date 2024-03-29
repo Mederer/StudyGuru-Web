@@ -8,7 +8,8 @@ export const studyguruApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:5260/',
         prepareHeaders: (headers) => {
-            const token = getUser()?.access_token;
+            const token = getUser()?.id_token;
+            console.log("setting token!", token)
             if (token) {
                 headers.set('Authorization', `Bearer ${token}`);
             }
@@ -17,7 +18,12 @@ export const studyguruApi = createApi({
     }),
     endpoints: (builder) => ({
         getAllFlashCards: builder.query<FlashCard[], void>({
-            query: () => 'flashcards',
+            query: () => ({
+                url: 'flashcards',
+                headers: {
+                    Authorization: `Bearer ${getUser()?.id_token}`
+                }
+            }),
             providesTags: ['FlashCard'],
         }),
         createFlashCard: builder.mutation<FlashCard, Partial<FlashCard>>({

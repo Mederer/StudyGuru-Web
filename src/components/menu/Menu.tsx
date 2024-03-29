@@ -5,6 +5,7 @@ import {faSchool} from "@fortawesome/free-solid-svg-icons/faSchool";
 import Spacer from "../common/Spacer.tsx";
 import {faRightFromBracket} from "@fortawesome/free-solid-svg-icons/faRightFromBracket";
 import {useAuth} from "react-oidc-context";
+import {signoutParams} from "../../features/auth/util.ts";
 
 interface MenuProps {
     isActive: boolean;
@@ -14,7 +15,7 @@ export default function Menu({isActive, closeMenu}: MenuProps) {
     const auth = useAuth();
 
     const handleLogout = async () => {
-        await auth.signoutRedirect()
+        await auth.signoutRedirect({...signoutParams});
     }
 
     return <div className={`${styles.menu} ${isActive ? styles.open : ""}`}>

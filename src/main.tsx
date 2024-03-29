@@ -6,13 +6,14 @@ import "./styles/globals.scss"
 import "./styles/reset.scss"
 import {Provider} from "react-redux";
 import {store} from "./store.ts";
-import {AuthProvider} from "react-oidc-context";
+import {AuthProvider, AuthProviderProps} from "react-oidc-context";
 import "react-toastify/dist/ReactToastify.css";
 
-const oidcConfig = {
-    authority: "http://localhost:8080/realms/myrealm/",
-    client_id: "StudyGuruWeb",
+const oidcConfig: AuthProviderProps = {
+    authority: "https://studyguruorg.b2clogin.com/studyguruorg.onmicrosoft.com/B2C_1_SignInSignUp/v2.0/",
+    client_id: "53f95087-8c02-4dbc-a3ed-18ba01e77a8f",
     redirect_uri: "http://localhost:5173/",
+
 }
 
 const onSignInCallback = () => {
