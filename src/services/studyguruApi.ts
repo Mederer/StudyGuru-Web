@@ -1,47 +1,47 @@
-import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
-import {FlashCard} from "../features/flashcards/types.ts";
-import {getUser} from "../features/auth/util.ts";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { FlashCard } from "../features/flashcards/types.ts";
+import { getUser } from "../features/auth/util.ts";
 
 export const studyguruApi = createApi({
-    reducerPath: 'studyguruApi',
-    tagTypes: ['FlashCard'],
+    reducerPath: "studyguruApi",
+    tagTypes: ["FlashCard"],
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:5260/',
+        baseUrl: "http://localhost:5260/",
         prepareHeaders: (headers) => {
             const token = getUser()?.id_token;
-            console.log("setting token!", token)
             if (token) {
-                headers.set('Authorization', `Bearer ${token}`);
+                headers.set("Authorization", `Bearer ${token}`);
             }
             return headers;
-        }
+        },
     }),
     endpoints: (builder) => ({
         getAllFlashCards: builder.query<FlashCard[], void>({
             query: () => ({
-                url: 'flashcards',
-                headers: {
-                    Authorization: `Bearer ${getUser()?.id_token}`
-                }
+                url: "flashcards",
             }),
-            providesTags: ['FlashCard'],
+            providesTags: ["FlashCard"],
         }),
         createFlashCard: builder.mutation<FlashCard, Partial<FlashCard>>({
             query: (body) => ({
-                url: 'flashcards',
-                method: 'POST',
+                url: "flashcards",
+                method: "POST",
                 body,
             }),
-            invalidatesTags: ['FlashCard'],
+            invalidatesTags: ["FlashCard"],
         }),
         deleteFlashCard: builder.mutation<void, string>({
             query: (id) => ({
                 url: `flashcards/${id}`,
-                method: 'DELETE',
+                method: "DELETE",
             }),
-            invalidatesTags: ['FlashCard'],
+            invalidatesTags: ["FlashCard"],
         }),
-    })
+    }),
 });
 
-export const {useDeleteFlashCardMutation, useGetAllFlashCardsQuery, useCreateFlashCardMutation} = studyguruApi;
+export const {
+    useDeleteFlashCardMutation,
+    useGetAllFlashCardsQuery,
+    useCreateFlashCardMutation,
+} = studyguruApi;
