@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { FlashCard } from "../features/flashcards/types.ts";
+import { FlashCard, NewFlashCard } from "../features/flashcards/types.ts";
 import { getUser } from "../features/auth/util.ts";
 import { SERVER_URL } from "../constants.ts";
 import { NewTopic, Topic } from "../features/topics/types.ts";
@@ -24,7 +24,7 @@ export const studyguruApi = createApi({
             }),
             providesTags: ["FlashCard"],
         }),
-        createFlashCard: builder.mutation<FlashCard, Partial<FlashCard>>({
+        createFlashCard: builder.mutation<FlashCard, NewFlashCard>({
             query: (body) => ({
                 url: "flashcards",
                 method: "POST",

@@ -37,14 +37,14 @@ export default function Menu({ isActive, closeMenu }: MenuProps) {
                         link={"/flashcards"}
                         icon={faSchool}
                     />
-                    <li>
-                        <MenuEntry
-                            name={"Topics"}
-                            closeMenu={closeMenu}
-                            link={"/topics"}
-                            icon={faPen}
-                        />
-                    </li>
+                </li>
+                <li>
+                    <MenuEntry
+                        name={"Topics"}
+                        closeMenu={closeMenu}
+                        link={"/topics"}
+                        icon={faPen}
+                    />
                 </li>
                 <Spacer />
                 <li>
