@@ -4,9 +4,14 @@ import { getUser } from "../features/auth/util.ts";
 import { SERVER_URL } from "../constants.ts";
 import { NewTopic, Topic } from "../features/topics/types.ts";
 
+const TAGS = {
+    FlashCard: "FlashCard",
+    Topics: "Topics",
+};
+
 export const studyguruApi = createApi({
     reducerPath: "studyguruApi",
-    tagTypes: ["FlashCard"],
+    tagTypes: [TAGS.FlashCard, TAGS.Topics],
     baseQuery: fetchBaseQuery({
         baseUrl: SERVER_URL,
         prepareHeaders: (headers) => {
@@ -22,7 +27,7 @@ export const studyguruApi = createApi({
             query: () => ({
                 url: "flashcards",
             }),
-            providesTags: ["FlashCard"],
+            providesTags: [TAGS.FlashCard],
         }),
         createFlashCard: builder.mutation<FlashCard, NewFlashCard>({
             query: (body) => ({
@@ -30,14 +35,14 @@ export const studyguruApi = createApi({
                 method: "POST",
                 body,
             }),
-            invalidatesTags: ["FlashCard"],
+            invalidatesTags: [TAGS.FlashCard],
         }),
         deleteFlashCard: builder.mutation<void, string>({
             query: (id) => ({
                 url: `flashcards/${id}`,
                 method: "DELETE",
             }),
-            invalidatesTags: ["FlashCard"],
+            invalidatesTags: [TAGS.FlashCard],
         }),
         createTopic: builder.mutation<Topic, NewTopic>({
             query: (body) => ({
@@ -45,11 +50,13 @@ export const studyguruApi = createApi({
                 method: "POST",
                 body,
             }),
+            invalidatesTags: [TAGS.Topics],
         }),
         getAllTopics: builder.query<Topic[], void>({
             query: () => ({
                 url: "topics",
             }),
+            providesTags: [TAGS.Topics],
         }),
     }),
 });
