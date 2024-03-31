@@ -6,6 +6,7 @@ import Spacer from "../common/Spacer.tsx";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons/faRightFromBracket";
 import { useAuth } from "react-oidc-context";
 import { signoutParams } from "../../features/auth/util.ts";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
 
 interface MenuProps {
     isActive: boolean;
@@ -36,6 +37,14 @@ export default function Menu({ isActive, closeMenu }: MenuProps) {
                         link={"/flashcards"}
                         icon={faSchool}
                     />
+                    <li>
+                        <MenuEntry
+                            name={"Topics"}
+                            closeMenu={closeMenu}
+                            link={"/topics"}
+                            icon={faPen}
+                        />
+                    </li>
                 </li>
                 <Spacer />
                 <li>

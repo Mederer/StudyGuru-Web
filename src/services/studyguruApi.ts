@@ -1,12 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { FlashCard } from "../features/flashcards/types.ts";
 import { getUser } from "../features/auth/util.ts";
+import { SERVER_URL } from "../constants.ts";
+import { NewTopic, Topic } from "../features/topics/types.ts";
 
 export const studyguruApi = createApi({
     reducerPath: "studyguruApi",
     tagTypes: ["FlashCard"],
     baseQuery: fetchBaseQuery({
-        baseUrl: "http://localhost:5260/",
+        baseUrl: SERVER_URL,
         prepareHeaders: (headers) => {
             const token = getUser()?.id_token;
             if (token) {
@@ -37,6 +39,18 @@ export const studyguruApi = createApi({
             }),
             invalidatesTags: ["FlashCard"],
         }),
+        createTopic: builder.mutation<Topic, NewTopic>({
+            query: (body) => ({
+                url: "topics",
+                method: "POST",
+                body,
+            }),
+        }),
+        getAllTopics: builder.query<Topic[], void>({
+            query: () => ({
+                url: "topics",
+            }),
+        }),
     }),
 });
 
@@ -44,4 +58,6 @@ export const {
     useDeleteFlashCardMutation,
     useGetAllFlashCardsQuery,
     useCreateFlashCardMutation,
+    useCreateTopicMutation,
+    useGetAllTopicsQuery,
 } = studyguruApi;
