@@ -15,7 +15,7 @@ function TopicList() {
         <div>
             {data.map((topic) => (
                 <div key={topic.id}>
-                    <h2>{topic.name}</h2>
+                    <h2 style={{ color: topic.colour }}>{topic.name}</h2>
                 </div>
             ))}
         </div>

@@ -5,9 +5,7 @@ import {
 } from "../../services/studyguruApi.ts";
 import { toast } from "react-toastify";
 import TextArea from "../../components/common/TextArea.tsx";
-
-const validateQuestion = (question: string) => question.length > 2;
-const validateAnswer = (answer: string) => answer.length > 2;
+import { validateAnswer, validateQuestion } from "./validation.ts";
 
 export default function CreateFlashCardForm() {
     const [question, setQuestion] = useState("");
@@ -40,6 +38,12 @@ export default function CreateFlashCardForm() {
         }
         createFlashCard({ question, answer, topicId: selectedTopicId });
     };
+
+    if (!topicsLoading && !topicsError && topics) {
+        if (topics.length > 0 && !selectedTopicId) {
+            setSelectedTopicId(topics[0].id);
+        }
+    }
 
     return (
         <form onSubmit={handleSubmit}>

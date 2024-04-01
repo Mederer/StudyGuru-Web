@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { FlashCard, NewFlashCard } from "../features/flashcards/types.ts";
 import { getUser } from "../features/auth/util.ts";
 import { SERVER_URL } from "../constants.ts";
-import { NewTopic, Topic } from "../features/topics/types.ts";
+import { CreateTopicRequest, Topic } from "../features/topics/types.ts";
 
 const TAGS = {
     FlashCard: "FlashCard",
@@ -44,7 +44,7 @@ export const studyguruApi = createApi({
             }),
             invalidatesTags: [TAGS.FlashCard],
         }),
-        createTopic: builder.mutation<Topic, NewTopic>({
+        createTopic: builder.mutation<Topic, CreateTopicRequest>({
             query: (body) => ({
                 url: "topics",
                 method: "POST",
