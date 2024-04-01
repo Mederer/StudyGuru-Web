@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { FlashCard, NewFlashCard } from "../features/flashcards/types.ts";
-import { getUser } from "../features/auth/util.ts";
 import { SERVER_URL } from "../constants.ts";
 import { CreateTopicRequest, Topic } from "../features/topics/types.ts";
+import { getUser } from "../utils.ts";
 
 const TAGS = {
     FlashCard: "FlashCard",

@@ -3,7 +3,7 @@ import styles from "./FlashCardCard.module.scss";
 import { SyntheticEvent, useEffect, useState } from "react";
 import { useDeleteFlashCardMutation } from "../../services/studyguruApi.ts";
 import { toast } from "react-toastify";
-import { isColourDark } from "./utils.ts";
+import { isColourDark } from "../../utils.ts";
 
 interface FlashCardCardProps {
     flashCard: FlashCard;

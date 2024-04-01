@@ -1,0 +1,19 @@
+{
+  "tabWidth": 4,
+  "semi": true,
+  "singleQuote": false,
+  "overrides": [
+    {
+      "files": "*.json",
+      "options": {
+        "tabWidth": 2
+      }
+    },
+    {
+      "files": "*.scss",
+      "options": {
+        "tabWidth": 2
+      }
+    }
+  ]
+}

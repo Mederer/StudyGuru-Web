@@ -1,7 +1,7 @@
-import {configureStore} from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import kanbanReducer from "./features/kanban/kanbanSlice.ts";
-import {studyguruApi} from "./services/studyguruApi.ts";
-import {setupListeners} from "@reduxjs/toolkit/query";
+import { studyguruApi } from "./services/studyguruApi.ts";
+import { setupListeners } from "@reduxjs/toolkit/query";
 
 export const store = configureStore({
     reducer: {

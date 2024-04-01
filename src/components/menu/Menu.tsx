@@ -5,8 +5,8 @@ import { faSchool } from "@fortawesome/free-solid-svg-icons/faSchool";
 import Spacer from "../common/Spacer.tsx";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons/faRightFromBracket";
 import { useAuth } from "react-oidc-context";
-import { signoutParams } from "../../features/auth/util.ts";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { signoutParams } from "../../utils.ts";
 
 interface MenuProps {
     isActive: boolean;
