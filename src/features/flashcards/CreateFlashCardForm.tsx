@@ -6,6 +6,7 @@ import {
 import { toast } from "react-toastify";
 import TextArea from "../../components/common/TextArea.tsx";
 import { validateAnswer, validateQuestion } from "./validation.ts";
+import styles from "./CreateFlashCardForm.module.scss";
 
 export default function CreateFlashCardForm() {
     const [question, setQuestion] = useState("");
@@ -46,7 +47,7 @@ export default function CreateFlashCardForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={styles.createFlashCardForm}>
             <TextArea
                 value={question}
                 label="Question"
@@ -62,19 +63,21 @@ export default function CreateFlashCardForm() {
             ) : topicsError ? (
                 <div>Error: {topicsError.toString()}</div>
             ) : (
-                <select
-                    value={selectedTopicId}
-                    onChange={(e) => setSelectedTopicId(e.target.value)}
-                >
-                    {topics?.map((topic) => (
-                        <option key={topic.id} value={topic.id}>
-                            {topic.name}
-                        </option>
-                    ))}
-                </select>
+                <div className={styles.topic}>
+                    <label htmlFor="topic">Topic</label>
+                    <select
+                        name="topic"
+                        value={selectedTopicId}
+                        onChange={(e) => setSelectedTopicId(e.target.value)}
+                    >
+                        {topics?.map((topic) => (
+                            <option key={topic.id} value={topic.id}>
+                                {topic.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
             )}
-            <br />
-            <br />
             <button type="submit">Create</button>
         </form>
     );
