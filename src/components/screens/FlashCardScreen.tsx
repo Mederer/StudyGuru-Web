@@ -3,17 +3,23 @@ import styles from "./FlashCardScreen.module.scss";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import IconLinkButton from "../common/IconLinkButton.tsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useGetAllFlashCardsQuery } from "../../services/studyguruApi.ts";
+import {
+    useGetAllFlashCardsQuery,
+    useGetAllTopicsQuery,
+} from "../../services/studyguruApi.ts";
 import { withAuthenticationRequired } from "react-oidc-context";
 import { useMemo, useState } from "react";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 
 function FlashCardScreen() {
     const { data: flashCards, error, isLoading } = useGetAllFlashCardsQuery();
+    const { data: topics, isLoading: topicsIsLoading } = useGetAllTopicsQuery();
+
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [filter, setFilter] = useState("");
+    const [selectedTopicId, setSelectedTopicId] = useState<string>("");
 
-    const filteredFlashcards = useMemo(() => {
+    let filteredFlashcards = useMemo(() => {
         if (!flashCards) {
             return [];
         }
@@ -24,6 +30,15 @@ function FlashCardScreen() {
             flashCard.question.toLowerCase().includes(filter.toLowerCase()),
         );
     }, [flashCards, filter]);
+
+    filteredFlashcards = useMemo(() => {
+        if (!filteredFlashcards || selectedTopicId === "") {
+            return filteredFlashcards;
+        }
+        return filteredFlashcards.filter(
+            (flashCard) => flashCard.topic.id === selectedTopicId,
+        );
+    }, [filteredFlashcards, selectedTopicId]);
 
     if (isLoading) {
         return <div>Loading...</div>;
@@ -58,13 +73,35 @@ function FlashCardScreen() {
                 className={`${styles.settingsDrawer} ${drawerOpen ? styles.open : ""}`}
             >
                 <h2>Settings</h2>
-                <label htmlFor="filter">Filter</label>
-                <input
-                    name="filter"
-                    type="text"
-                    value={filter}
-                    onChange={(e) => setFilter(e.target.value)}
-                />
+                <div className={styles.filterSection}>
+                    <label htmlFor="filter">Filter</label>
+                    <input
+                        name="filter"
+                        type="text"
+                        value={filter}
+                        onChange={(e) => setFilter(e.target.value)}
+                    />
+                </div>
+                {topicsIsLoading ? (
+                    <div>Loading...</div>
+                ) : (
+                    <div className={styles.filterSection}>
+                        <label htmlFor="selectedTopicId">Topic</label>
+                        <select
+                            name="selectedTopicId"
+                            id="selectedTopicId"
+                            value={selectedTopicId}
+                            onChange={(e) => setSelectedTopicId(e.target.value)}
+                        >
+                            <option value="">All Topics</option>
+                            {topics?.map((topic) => (
+                                <option key={topic.id} value={topic.id}>
+                                    {topic.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                )}
             </div>
             <FlashCardList flashCards={filteredFlashcards} />
         </div>
